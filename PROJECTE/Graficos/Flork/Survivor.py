@@ -244,9 +244,9 @@ class Player():
         self.width = self.image.get_width()
         self.height = self.image.get_height()
         self.vel_y = 0
-        self.jumped = False
+        self.jumped = False # definir jump como false
         self.direction = 0
-        self.in_air = True
+        self.in_air = True #en el aire cierto
 
 
 class World():
