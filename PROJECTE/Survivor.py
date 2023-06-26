@@ -9,7 +9,7 @@ mixer.init()  #iniciar mixer para sonido
 pygame.init() #iniciar pygame
 
 clock = pygame.time.Clock()
-fps = 60 #número de frames per second
+fps = 60 #número de frames per secon
 
 screen_width = 1000 #anchura de la pantalla
 screen_height = 1000 #altura de la pantalla
