@@ -14,3 +14,4 @@ tile_size = 50
 #				img_left = pygame.transform.flip(img_right, True, False)
 #				self.images_right.append(img_right)
 #				self.images_left.append(img_left)
+

@@ -15,3 +15,19 @@ GREEN = (0, 255, 0)
 
 PROTA = 0
 
+for row in data:
+    col_count = 0
+    for tile in row:
+        img = pygame.transform.scale(dirt_img, (tile_size, tile_size))
+        img_rect = img.get_rect()
+        img_rect.x = col_count * tile_size
+        img_rect.y = row_count * tile_size
+        tile = (img, img_rect)
+        if tile == 1:
+            self.tile_list.append(tile)
+        elif tile == 2:
+            self.tile_list.append(tile)
+        else:
+            col_count += 1
+    row_count += 1
+
