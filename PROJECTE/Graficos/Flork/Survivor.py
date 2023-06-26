@@ -460,3 +460,4 @@ while run: #bucle
     pygame.display.update()
 
 pygame.quit() #salir de pygame
+#vkjghjvhjvhjvjhhgh
