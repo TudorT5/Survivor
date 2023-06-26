@@ -2,7 +2,7 @@ SCREEN_WIDTH = 1100
 SCREEN_HEIGHT = 552
 
 FPS = 60
-# Clores:
+# Colores:
 
 BLACK = (0, 0, 0)
 YELLOW = (255, 255, 0)
