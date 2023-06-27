@@ -9,7 +9,7 @@ clock = pygame.time.Clock()
 fps = 60
 
 #game window
-tile_size = 50
+tile_size = 30
 cols = 20
 margin = 100
 screen_width = tile_size * cols
@@ -30,7 +30,7 @@ platform_x_img = pygame.image.load('Graficos/Plat_1.png')
 platform_y_img = pygame.image.load('Graficos/Plat_1.png')
 lava_img = pygame.image.load('Graficos/Pinchos.png')
 coin_img = pygame.image.load('Graficos/estrella.png')
-exit_img = pygame.image.load('Graficos/Botones/button_exit.png')
+exit_img = pygame.image.load('Graficos/Puerta.png')
 save_img = pygame.image.load('Graficos/Botones/button_exit.png')
 load_img = pygame.image.load('Graficos/Botones/button_exit.png')
 

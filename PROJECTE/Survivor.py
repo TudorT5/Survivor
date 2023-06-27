@@ -26,7 +26,7 @@ font_score = pygame.font.SysFont('Bauhaus 93', 30)  # definir la fuente para Gam
 tile_size = 40
 game_over = 0  # comenzar con variable game over a 0, significa jugar
 main_menu = True  # inicializar con el menú = true, para que se muestre y no inicié directamente el juego
-level = 7  # comenzar nivel 0
+level = 2  # comenzar nivel 0
 max_levels = 7  # definir máximo de niveles a 7
 score = 0  # empezar con la variable puntuación a 0
 
@@ -429,12 +429,10 @@ while run:  # bucle
             platform_group.update()  # actualizar plataformas
             # update score
             # check if a coin has been collected
-            if pygame.sprite.spritecollide(player, coin_group,
-                                           True):  # detectar collision con una moneda y elimanarla con true
+            if pygame.sprite.spritecollide(player, coin_group, True):  # detectar collision con una moneda y elimanarla con true
                 score += 1  # aumentar contador +1
                 coin_fx.play()  # llamar al sonido de coger moneda
-            draw_text('X ' + str(score), font_score, white, tile_size - 10,
-                      10)  # texto para mostrar las monedas en pantalla
+            draw_text('X ' + str(score), font_score, white, tile_size - 10, 10)  # texto para mostrar las monedas en pantalla
 
         blob_group.draw(screen)  # mostrar enemigos en la pantalla
         platform_group.draw(screen)  # mostrar plataformas en la pantalla
