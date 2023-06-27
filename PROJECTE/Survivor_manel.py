@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from pygame import mixer  # para poder cargar música en python
 import pickle
-from os import path
+from os import path #importar path, servirá para comprobar el máximo de archivos data para los niveles
 
 
 pygame.mixer.pre_init(44100, -16, 2, 512)  # predefinir configuración para el mixer
@@ -302,8 +302,8 @@ class World():
                                 tile_size // 2))  # escalar la imagen al tamaño pedido y ajustarla en pantalla
                     coin_group.add(coin)  # añadir la imagen al grupo
                 if tile == 8:  # comprobar si vale 8 para generar la imagen
-                    exit = Exit(col_count * tile_size, row_count * tile_size - (
-                                tile_size // 2))  # escalar la imagen al tamaño pedido y ajustarla en pantalla
+                    exit = Exit(col_count * tile_size, row_count * tile_size - (tile_size // 2))  # escalar la imagen al tamaño pedido y ajustarla en pantalla
+                    exit_group.add(exit)
                 col_count += 1  # añadir a col_count 1
             row_count += 1  # añadir a row_count 1
 
@@ -438,7 +438,7 @@ while run:  # bucle
         platform_group.draw(screen)  # mostrar plataformas en la pantalla
         lava_group.draw(screen)  # mostrar la lava en la pantalla
         coin_group.draw(screen)  # mostrar monedas en la pantalla
-        exit_group.draw(screen)  # mostrar botón exit en la pantalla
+        exit_group.draw(screen)  # mostrar puerta en la pantalla
 
         game_over = player.update(game_over)  # actualizar en caso de game over el jugador
 
