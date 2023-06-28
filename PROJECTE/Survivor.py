@@ -99,8 +99,7 @@ class Player():
                 dx += 4  # diferencia de x para evitar colision
                 self.counter += 1  # aumentar el contador
                 self.direction = 1  # sentido de movimiento negativo (izquierda)
-            if key[pygame.K_LEFT] == False and key[
-                pygame.K_RIGHT] == False:  # comprobar flecha izquierda y derecha para que el personaje no se mueva
+            if key[pygame.K_LEFT] == False and key[pygame.K_RIGHT] == False:  # comprobar flecha izquierda y derecha para que el personaje no se mueva
                 self.counter = 0
                 self.index = 0
                 if self.direction == 1:  # comprobar direccion para la imagen del personaje
@@ -157,23 +156,23 @@ class Player():
             if pygame.sprite.spritecollide(self, exit_group, False):  # buscar colisión y no eliminar el objeto (False)
                 game_over = 1  # pasar a game over 1, significa has ganado o avanzas de nivel
 
-            # comprobar colisión con la plataforma
+            # comprobar colisión con la plataforma móvil
             for platform in platform_group:
                 # comprobar colisión en x
                 if platform.rect.colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):  # buscar colisión
                     dx = 0  # diferencia de x igual a 0
                 # comprobar colisión en y
                 if platform.rect.colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):  # buscar colisión
-                    # comprobar colisión saltando con plataforma y cabeza
+                    # comprobar colisión saltando con plataforma móvil y cabeza
                     if abs((self.rect.top + dy) - platform.rect.bottom) < col_thresh:
                         self.vel_y = 0
                         dy = platform.rect.bottom - self.rect.top
-                    # comprobar colisión caiendo a plataforma
+                    # comprobar colisión caiendo a plataforma móvil
                     elif abs((self.rect.bottom + dy) - platform.rect.top) < col_thresh:
                         self.rect.bottom = platform.rect.top - 1
                         self.in_air = False
                         dy = 0
-                    # moverse con la plataforma
+                    # moverse con la plataforma móvil
                     if platform.move_x != 0:
                         self.rect.x += platform.move_direction
 
