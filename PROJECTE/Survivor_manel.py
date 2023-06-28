@@ -305,3 +305,6 @@ while run:  # bucle
     pygame.display.update() #actualizar
 
 pygame.quit()  # salir de pygame
+
+
+
