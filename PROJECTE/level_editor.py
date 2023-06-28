@@ -23,8 +23,7 @@ pygame.display.set_caption('Level Editor')
 
 bg_img = pygame.image.load('Graficos/Background.jpg')
 bg_img = pygame.transform.scale(bg_img, (screen_width, screen_height - margin))
-dirt_img = pygame.image.load('Graficos/Plat_1.png')
-grass_img = pygame.image.load('Graficos/Plat_1.png')
+plat_img = pygame.image.load('Graficos/Plat_1.png')
 ghost_img = pygame.image.load('Graficos/Fantasma.png')
 platform_x_img = pygame.image.load('Graficos/Plat_1.png')
 platform_y_img = pygame.image.load('Graficos/Plat_1.png')
@@ -75,13 +74,9 @@ def draw_world():
 	for row in range(20):
 		for col in range(20):
 			if world_data[row][col] > 0:
-				if world_data[row][col] == 1:
+				if world_data[row][col] == 1 or 2:
 					#Plataforma
-					img = pygame.transform.scale(dirt_img, (tile_size, tile_size))
-					screen.blit(img, (col * tile_size, row * tile_size))
-				if world_data[row][col] == 2:
-					#Plataforma
-					img = pygame.transform.scale(grass_img, (tile_size, tile_size))
+					img = pygame.transform.scale(plat_img, (tile_size, tile_size))
 					screen.blit(img, (col * tile_size, row * tile_size))
 				if world_data[row][col] == 3:
 					#Enemigos
