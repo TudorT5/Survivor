@@ -1,5 +1,4 @@
 import pygame
-from pygame.locals import *
 from Constantes2 import *
 #from Player import Player
 
@@ -9,7 +8,7 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Survivor')
 # fondo
-bg = pygame.image.load('Graficos/Background.jpg')
+bg = pygame.image.load('../Graficos/Background.jpg')
 bg_img = pygame.transform.scale(bg, (1000, 1000))
 
 
@@ -20,7 +19,7 @@ class Player():
 		self.index = 0
 		self.counter = 0
 
-		img_right = pygame.image.load('Graficos/Flork/Flork_1.png')
+		img_right = pygame.image.load('../Graficos/Flork/Flork_1.png')
 		img_right = pygame.transform.scale(img_right, (40, 80))
 		img_left = pygame.transform.flip(img_right, True, False)
 		self.images_right.append(img_right)
@@ -113,8 +112,8 @@ class World():
 		self.tile_list = []
 
 		# load images
-		dirt_img = pygame.image.load('Graficos/Plat_1.png')
-		grass_img = pygame.image.load('Graficos/Plat_1.png')
+		dirt_img = pygame.image.load('../Graficos/Plat_1.png')
+		grass_img = pygame.image.load('../Graficos/Plat_1.png')
 
 		row_count = 0
 		for row in data:

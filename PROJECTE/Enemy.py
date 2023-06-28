@@ -1,4 +1,5 @@
 import pygame
+
 class Enemy(pygame.sprite.Sprite):  # definir clase enemigos
     def __init__(self, x, y):  # inicializar
         pygame.sprite.Sprite.__init__(self)
@@ -17,4 +18,3 @@ class Enemy(pygame.sprite.Sprite):  # definir clase enemigos
         if abs(self.move_counter) > 40:
             self.move_direction *= -1
             self.move_counter *= -1
-

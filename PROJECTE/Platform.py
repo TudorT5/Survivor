@@ -1,4 +1,6 @@
 import pygame
+from Constantes import *
+
 class Platform(pygame.sprite.Sprite):  # definición de la clase plataforma
     def __init__(self, x, y, move_x, move_y):  # inicializar
         pygame.sprite.Sprite.__init__(self)

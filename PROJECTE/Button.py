@@ -1,11 +1,12 @@
 import pygame
 class Button():
-    def __init__(self, x, y, image):
+    def __init__(self, x, y, image, screen):
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
         self.clicked = False
+        self.screen = screen
 
     def draw(self):
         action = False
@@ -22,7 +23,6 @@ class Button():
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicked = False
 
-
-        screen.blit(self.image, self.rect)
+        self.screen.blit(self.image, self.rect)
 
         return action

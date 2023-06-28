@@ -1,33 +1,18 @@
-SCREEN_WIDTH = 1100
-SCREEN_HEIGHT = 552
 
-FPS = 60
-# Colores:
+fps = 60  # número de frames per secon
 
-BLACK = (0, 0, 0)
-YELLOW = (255, 255, 0)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-PINK = (255,100,150)
-TEAL = (100,255,255)
-ORANGE = (230,190,40)
-GREEN = (0, 255, 0)
+screen_width = 800  # anchura de la pantalla
+screen_height = 800 # altura de la pantalla
 
-PROTA = 0
+# VARIABLES JUEGO
+tile_size = 40
+game_over = 0  # comenzar con variable game over a 0, significa jugar
+main_menu = True  # inicializar con el menú = true, para que se muestre y no inicié directamente el juego
+level = 2  # comenzar nivel 0
+max_levels = 7  # definir máximo de niveles a 7
+score = 0  # empezar con la variable puntuación a 0
 
-for row in data:
-    col_count = 0
-    for tile in row:
-        img = pygame.transform.scale(dirt_img, (tile_size, tile_size))
-        img_rect = img.get_rect()
-        img_rect.x = col_count * tile_size
-        img_rect.y = row_count * tile_size
-        tile = (img, img_rect)
-        if tile == 1:
-            self.tile_list.append(tile)
-        elif tile == 2:
-            self.tile_list.append(tile)
-        else:
-            col_count += 1
-    row_count += 1
-
+# COLORES
+white = (255, 255, 255)  # color blanco definido para el texto de las monedas o a necesitar
+blue = (0, 0, 255)  # color azul definido para el texto de Game Over, Winner o a necesitar
+red = (255, 0, 0)

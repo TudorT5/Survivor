@@ -1,4 +1,6 @@
 import pygame
+from Constantes import *
+
 class Exit(pygame.sprite.Sprite):  # definición de la clase lava
     def __init__(self, x, y):  # inicializar
         pygame.sprite.Sprite.__init__(self)

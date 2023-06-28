@@ -1,2 +1,0 @@
-class Estructura():
-    pass
