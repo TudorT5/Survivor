@@ -31,7 +31,7 @@ platform_y_img = pygame.image.load('Graficos/Plat_1.png')
 lava_img = pygame.image.load('Graficos/Pinchos.png')
 coin_img = pygame.image.load('Graficos/coin.png')
 exit_img = pygame.image.load('Graficos/Puerta.png')
-save_img = pygame.image.load('Graficos/Botones/button_exit.png')
+save_img = pygame.image.load('Graficos/Botones/button_start.png')
 load_img = pygame.image.load('Graficos/Botones/button_exit.png')
 
 

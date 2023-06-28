@@ -8,7 +8,7 @@ screen_height = 800 # altura de la pantalla
 tile_size = 40
 game_over = 0  # comenzar con variable game over a 0, significa jugar
 main_menu = True  # inicializar con el menú = true, para que se muestre y no inicié directamente el juego
-level = 2  # comenzar nivel 0
+level = 1  # comenzar nivel 0
 max_levels = 7  # definir máximo de niveles a 7
 score = 0  # empezar con la variable puntuación a 0
 
