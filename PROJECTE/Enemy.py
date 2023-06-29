@@ -1,8 +1,8 @@
 import pygame
-
-class Enemy(pygame.sprite.Sprite):  # definir clase enemigos
+from pygame.sprite import Sprite
+class Enemy(Sprite):  # definir clase enemigos
     def __init__(self, x, y):  # inicializar
-        pygame.sprite.Sprite.__init__(self)
+        Sprite.__init__(self)
         imghost = pygame.image.load('Graficos/Fantasma.png')  # cargar imagen enemigos
         self.image = pygame.transform.scale(imghost, (30, 50))
         self.rect = self.image.get_rect()  # crear rectangulo para los enemigos

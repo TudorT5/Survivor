@@ -30,9 +30,10 @@ platform_y_img = pygame.image.load('Graficos/Plat_1.png')
 lava_img = pygame.image.load('Graficos/Pinchos.png')
 coin_img = pygame.image.load('Graficos/coin.png')
 exit_img = pygame.image.load('Graficos/Puerta.png')
-save_img = pygame.image.load('Graficos/Botones/button_start.png')
-load_img = pygame.image.load('Graficos/Botones/button_exit.png')
-
+save_img = pygame.image.load('Graficos/Botones/button_save.png')
+save_img = pygame.transform.scale(save_img, (100, 30))
+load_img = pygame.image.load('Graficos/Botones/button_load.png')
+load_img = pygame.transform.scale(load_img, (100, 30))
 
 #Definir variables juego
 clicked = False
@@ -40,7 +41,8 @@ level = 1
 
 #Definir Colores
 white = (255, 255, 255)
-green = (144, 201, 120)
+grey = (128, 128, 128)
+
 
 font = pygame.font.SysFont('Futura', 24)
 
@@ -143,7 +145,7 @@ while run:
 	clock.tick(fps)
 
 	#fondo
-	screen.fill(green)
+	screen.fill(grey)
 	screen.blit(bg_img, (0, 0))
 
 

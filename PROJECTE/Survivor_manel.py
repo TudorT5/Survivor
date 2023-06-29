@@ -29,11 +29,11 @@ bg_img = pygame.transform.scale(bg, (800, 800)) #escalar la imagen del fondo
 restart_img = pygame.image.load('Graficos/Botones/button_restart.png')  # cargar imagen botón reset
 start_img = pygame.image.load('Graficos/Botones/button_start.png')  # cargar imagen botón comenzar
 exit_img = pygame.image.load('Graficos/Botones/button_exit.png')  # cargar imagen botón exit
-img_jump = pygame.image.load('Graficos/Flork/Flork_jump.png') #cargar imagen jugador saltando
-img_jump = pygame.transform.scale(img_jump, (32, 64)) #escalar la imagen del jugador saltando
+
 
 
 # cargar sonidos
+
 pygame.mixer.music.load('Audio/music.wav')  # sonido para el juego de fondo
 pygame.mixer.music.play(-1, 0.0, 5000)  # activar sonido juego de fondo con un delay de 5000ms
 coin_fx = pygame.mixer.Sound('Audio/coin.wav')  # sonido para coger moneda
@@ -99,8 +99,7 @@ class Player():
                 dx += 4  # diferencia de x para evitar colision
                 self.counter += 1  # aumentar el contador
                 self.direction = 1  # sentido de movimiento negativo (izquierda)
-            if key[pygame.K_LEFT] == False and key[
-                pygame.K_RIGHT] == False:  # comprobar flecha izquierda y derecha para que el personaje no se mueva
+            if key[pygame.K_LEFT] == False and key[pygame.K_RIGHT] == False:  # comprobar flecha izquierda y derecha para que el personaje no se mueva
                 self.counter = 0
                 self.index = 0
                 if self.direction == 1:  # comprobar direccion para la imagen del personaje
@@ -157,23 +156,23 @@ class Player():
             if pygame.sprite.spritecollide(self, exit_group, False):  # buscar colisión y no eliminar el objeto (False)
                 game_over = 1  # pasar a game over 1, significa has ganado o avanzas de nivel
 
-            # comprobar colisión con la plataforma
+            # comprobar colisión con la plataforma móvil
             for platform in platform_group:
                 # comprobar colisión en x
                 if platform.rect.colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):  # buscar colisión
                     dx = 0  # diferencia de x igual a 0
                 # comprobar colisión en y
                 if platform.rect.colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):  # buscar colisión
-                    # comprobar colisión saltando con plataforma y cabeza
+                    # comprobar colisión saltando con plataforma móvil y cabeza
                     if abs((self.rect.top + dy) - platform.rect.bottom) < col_thresh:
                         self.vel_y = 0
                         dy = platform.rect.bottom - self.rect.top
-                    # comprobar colisión caiendo a plataforma
+                    # comprobar colisión caiendo a plataforma móvil
                     elif abs((self.rect.bottom + dy) - platform.rect.top) < col_thresh:
                         self.rect.bottom = platform.rect.top - 1
                         self.in_air = False
                         dy = 0
-                    # moverse con la plataforma
+                    # moverse con la plataforma móvil
                     if platform.move_x != 0:
                         self.rect.x += platform.move_direction
 
@@ -199,7 +198,7 @@ class Player():
         self.index = 0 #para escoger la variable de la lista
         self.counter = 0 # contador para controlar la velocidad de animación
         for num in range(1, 5): #para seleccionar en caso de querer mas imagenes con el mismo nombre
-            img_right = pygame.image.load('Graficos/Flork/Flork_1.png') #cargar imagen del personaje derecha
+            img_right = pygame.image.load(f'Graficos/Flork/Flork_{num}.png') #cargar imagen del personaje derecha
             img_right = pygame.transform.scale(img_right, (32, 64)) #escalar imagen
             img_left = pygame.transform.flip(img_right, True, False) #invertir imagen para así ahorrarnos crear la imagen hacia la derecha
             self.images_right.append(img_right) #mandar a la lista el valor de image right
@@ -216,6 +215,7 @@ class Player():
         self.jumped = False #salto false
         self.direction = 0 #dirección 0 (parado sin hacer nada)
         self.in_air = True #salto
+
 
 player = Player(100, screen_height - 130)  # definir posición inicial del jugador en pantalla
 
@@ -236,6 +236,7 @@ world = World(world_data, screen) #mostrar en pantalla world con el valor de dat
 restart_button = Button(screen_width // 2 - 80, screen_height // 2 + 100, restart_img, screen)  # crear botón reset con su tamaño y posición
 start_button = Button(screen_width // 2 - 250, screen_height // 2, start_img, screen)  # crear botón empezar con su tamaño y posición
 exit_button = Button(screen_width // 2 + 50, screen_height // 2, exit_img, screen)  # crear botón exit con su tamaño y posición
+
 
 
 run = True  # para inicializar
@@ -308,3 +309,25 @@ pygame.quit()  # salir de pygame
 
 
 
+#world_data = [
+#[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 1],
+#[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 2, 2, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 7, 0, 5, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 1],
+#[1, 7, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 7, 0, 0, 0, 0, 1],
+#[1, 0, 2, 0, 0, 7, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 0, 0, 2, 0, 0, 4, 0, 0, 0, 0, 3, 0, 0, 3, 0, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 7, 0, 0, 0, 0, 2, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 2, 2, 2, 2, 2, 1],
+#[1, 0, 0, 0, 0, 0, 2, 2, 2, 6, 6, 6, 6, 6, 1, 1, 1, 1, 1, 1],
+#[1, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+#[1, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+#[1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+#]

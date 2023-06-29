@@ -29,11 +29,11 @@ bg_img = pygame.transform.scale(bg, (800, 800)) #escalar la imagen del fondo
 restart_img = pygame.image.load('Graficos/Botones/button_restart.png')  # cargar imagen botón reset
 start_img = pygame.image.load('Graficos/Botones/button_start.png')  # cargar imagen botón comenzar
 exit_img = pygame.image.load('Graficos/Botones/button_exit.png')  # cargar imagen botón exit
-img_jump = pygame.image.load('Graficos/Flork/Flork_jump.png') #cargar imagen jugador saltando
-img_jump = pygame.transform.scale(img_jump, (32, 64)) #escalar la imagen del jugador saltando
+
 
 
 # cargar sonidos
+
 pygame.mixer.music.load('Audio/music.wav')  # sonido para el juego de fondo
 pygame.mixer.music.play(-1, 0.0, 5000)  # activar sonido juego de fondo con un delay de 5000ms
 coin_fx = pygame.mixer.Sound('Audio/coin.wav')  # sonido para coger moneda
@@ -198,7 +198,7 @@ class Player():
         self.index = 0 #para escoger la variable de la lista
         self.counter = 0 # contador para controlar la velocidad de animación
         for num in range(1, 5): #para seleccionar en caso de querer mas imagenes con el mismo nombre
-            img_right = pygame.image.load('Graficos/Flork/Flork_1.png') #cargar imagen del personaje derecha
+            img_right = pygame.image.load(f'Graficos/Flork/Flork_{num}.png') #cargar imagen del personaje derecha
             img_right = pygame.transform.scale(img_right, (32, 64)) #escalar imagen
             img_left = pygame.transform.flip(img_right, True, False) #invertir imagen para así ahorrarnos crear la imagen hacia la derecha
             self.images_right.append(img_right) #mandar a la lista el valor de image right
@@ -215,6 +215,7 @@ class Player():
         self.jumped = False #salto false
         self.direction = 0 #dirección 0 (parado sin hacer nada)
         self.in_air = True #salto
+
 
 player = Player(100, screen_height - 130)  # definir posición inicial del jugador en pantalla
 
@@ -235,6 +236,7 @@ world = World(world_data, screen) #mostrar en pantalla world con el valor de dat
 restart_button = Button(screen_width // 2 - 80, screen_height // 2 + 100, restart_img, screen)  # crear botón reset con su tamaño y posición
 start_button = Button(screen_width // 2 - 250, screen_height // 2, start_img, screen)  # crear botón empezar con su tamaño y posición
 exit_button = Button(screen_width // 2 + 50, screen_height // 2, exit_img, screen)  # crear botón exit con su tamaño y posición
+
 
 
 run = True  # para inicializar

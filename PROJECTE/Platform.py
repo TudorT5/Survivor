@@ -1,9 +1,10 @@
 import pygame
+from pygame.sprite import Sprite
 from Constantes import *
 
-class Platform(pygame.sprite.Sprite):  # definición de la clase plataforma
+class Platform(Sprite):  # definición de la clase plataforma
     def __init__(self, x, y, move_x, move_y):  # inicializar
-        pygame.sprite.Sprite.__init__(self)
+        Sprite.__init__(self)
         img = pygame.image.load('Graficos/Plat_1.png')  # cargar imagen de la plataforma
         self.image = pygame.transform.scale(img, (tile_size, tile_size // 2))  # escalar la imagen
         self.rect = self.image.get_rect()  # crear rectangulo a la imagen plataforma

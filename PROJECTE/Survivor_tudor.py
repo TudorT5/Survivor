@@ -3,11 +3,11 @@ from pygame.locals import *
 from pygame import mixer  # para poder cargar música en python
 import pickle
 from os import path #importar path, servirá para comprobar el máximo de archivos data para los niveles
-from Constantes import *
-from Sprites import *
-from Button import Button
-from Coin import Coin
-from World import World
+from Constantes import * #importar del archivo constantes
+from Sprites import * #importar del archivo sprites
+from Button import Button #importar clase button del archivo button
+from Coin import Coin #importar clase coin del archivo coin
+from World import World #importar clase world del archivo world
 
 
 
@@ -25,15 +25,15 @@ font_score = pygame.font.SysFont('Roboto', 40)  # definir la fuente para Game Ov
 # cargar imagenes
 
 bg = pygame.image.load('Graficos/Background.jpg')  # cargar imagen fondo pantalla
-bg_img = pygame.transform.scale(bg, (800, 800))
+bg_img = pygame.transform.scale(bg, (800, 800)) #escalar la imagen del fondo
 restart_img = pygame.image.load('Graficos/Botones/button_restart.png')  # cargar imagen botón reset
 start_img = pygame.image.load('Graficos/Botones/button_start.png')  # cargar imagen botón comenzar
 exit_img = pygame.image.load('Graficos/Botones/button_exit.png')  # cargar imagen botón exit
-img_jump = pygame.image.load('Graficos/Flork/Flork_jump.png')
-img_jump = pygame.transform.scale(img_jump, (32, 64))
+
 
 
 # cargar sonidos
+
 pygame.mixer.music.load('Audio/music.wav')  # sonido para el juego de fondo
 pygame.mixer.music.play(-1, 0.0, 5000)  # activar sonido juego de fondo con un delay de 5000ms
 coin_fx = pygame.mixer.Sound('Audio/coin.wav')  # sonido para coger moneda
@@ -47,7 +47,7 @@ game_over_fx.set_volume(0.5)  # definir volumen al 50%
 
 
 
-def draw_text(text, font, text_col, x, y):
+def draw_text(text, font, text_col, x, y): #dibujar el texto
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
 
@@ -55,7 +55,7 @@ def draw_text(text, font, text_col, x, y):
 # función resetear nivel
 def reset_level(level):
     player.reset(80, screen_height - 120)
-    blob_group.empty()
+    ghost_group.empty()
     platform_group.empty()
     coin_group.empty()
     lava_group.empty()
@@ -66,7 +66,7 @@ def reset_level(level):
         pickle_in = open(f'Levels/level{level}_data', 'rb')
         world_data = pickle.load(pickle_in)
     world = World(world_data, screen)
-    # create dummy coin for showing the score
+    # crear moneda para el marcador
     score_coin = Coin(tile_size // 2, tile_size // 2)
     coin_group.add(score_coin)
     return world
@@ -99,8 +99,7 @@ class Player():
                 dx += 4  # diferencia de x para evitar colision
                 self.counter += 1  # aumentar el contador
                 self.direction = 1  # sentido de movimiento negativo (izquierda)
-            if key[pygame.K_LEFT] == False and key[
-                pygame.K_RIGHT] == False:  # comprobar flecha izquierda y derecha para que el personaje no se mueva
+            if key[pygame.K_LEFT] == False and key[pygame.K_RIGHT] == False:  # comprobar flecha izquierda y derecha para que el personaje no se mueva
                 self.counter = 0
                 self.index = 0
                 if self.direction == 1:  # comprobar direccion para la imagen del personaje
@@ -108,7 +107,7 @@ class Player():
                 if self.direction == -1:  # comprobar direccion para la imagen del personaje
                     self.image = self.images_left[self.index]  # cambiar imagen del personaje mirando hacia la derecha
 
-            # animación
+            # animación, aumentando el contador de la lista self.index y irlo actualizando
             if self.counter > walk_cooldown:
                 self.counter = 0
                 self.index += 1
@@ -144,7 +143,7 @@ class Player():
                         self.in_air = False
 
             # comprobar colisión con enemigos
-            if pygame.sprite.spritecollide(self, blob_group, False):  # buscar colisión y no eliminar el objeto (False)
+            if pygame.sprite.spritecollide(self, ghost_group, False):  # buscar colisión y no eliminar el objeto (False)
                 game_over = -1  # pasar a game over -1, significa has perdido y el juego se para
                 game_over_fx.play()  # llamar al sonido de salto
 
@@ -157,23 +156,23 @@ class Player():
             if pygame.sprite.spritecollide(self, exit_group, False):  # buscar colisión y no eliminar el objeto (False)
                 game_over = 1  # pasar a game over 1, significa has ganado o avanzas de nivel
 
-            # comprobar colisión con la plataforma
+            # comprobar colisión con la plataforma móvil
             for platform in platform_group:
                 # comprobar colisión en x
                 if platform.rect.colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):  # buscar colisión
                     dx = 0  # diferencia de x igual a 0
                 # comprobar colisión en y
                 if platform.rect.colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):  # buscar colisión
-                    # comprobar colisión saltando con plataforma y cabeza
+                    # comprobar colisión saltando con plataforma móvil y cabeza
                     if abs((self.rect.top + dy) - platform.rect.bottom) < col_thresh:
                         self.vel_y = 0
                         dy = platform.rect.bottom - self.rect.top
-                    # comprobar colisión caiendo a plataforma
+                    # comprobar colisión caiendo a plataforma móvil
                     elif abs((self.rect.bottom + dy) - platform.rect.top) < col_thresh:
                         self.rect.bottom = platform.rect.top - 1
                         self.in_air = False
                         dy = 0
-                    # moverse con la plataforma
+                    # moverse con la plataforma móvil
                     if platform.move_x != 0:
                         self.rect.x += platform.move_direction
 
@@ -182,7 +181,7 @@ class Player():
             self.rect.y += dy
 
 
-        elif game_over == -1:
+        elif game_over == -1: #mostrar texto en pantalla "GAME OVER"
             self.image = self.dead_image
             draw_text('GAME OVER!', font, red, (screen_width // 2) - 250, (screen_height // 2) - 100)
             if self.rect.y > 200:
@@ -193,29 +192,30 @@ class Player():
 
         return game_over
 
-    def reset(self, x, y):
-        self.images_right = []
-        self.images_left = []
-        self.index = 0
-        self.counter = 0
-        for num in range(1, 5):
-            img_right = pygame.image.load('Graficos/Flork/Flork_1.png')
-            img_right = pygame.transform.scale(img_right, (32, 64))
-            img_left = pygame.transform.flip(img_right, True, False)
-            self.images_right.append(img_right)
-            self.images_left.append(img_left)
-        dead = pygame.image.load('Graficos/Flork/Flork_dead.png')
-        self.dead_image = pygame.transform.scale(dead, (32, 64))
-        self.image = self.images_right[self.index]
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.width = self.image.get_width()
-        self.height = self.image.get_height()
-        self.vel_y = 0
-        self.jumped = False
-        self.direction = 0
-        self.in_air = True
+    def reset(self, x, y): #mostrar imagen del personaje dirección derecha y izquierda y de muerte
+        self.images_right = [] #lista en blanco
+        self.images_left = [] #lista en blanco
+        self.index = 0 #para escoger la variable de la lista
+        self.counter = 0 # contador para controlar la velocidad de animación
+        for num in range(1, 5): #para seleccionar en caso de querer mas imagenes con el mismo nombre
+            img_right = pygame.image.load(f'Graficos/Flork/Flork_{num}.png') #cargar imagen del personaje derecha
+            img_right = pygame.transform.scale(img_right, (32, 64)) #escalar imagen
+            img_left = pygame.transform.flip(img_right, True, False) #invertir imagen para así ahorrarnos crear la imagen hacia la derecha
+            self.images_right.append(img_right) #mandar a la lista el valor de image right
+            self.images_left.append(img_left) #mandar a la lista el valor de image left
+        dead = pygame.image.load('Graficos/Flork/Flork_dead.png') #cargar imagen del personaje muerto
+        self.dead_image = pygame.transform.scale(dead, (32, 64)) #escalar imagen
+        self.image = self.images_right[self.index]  #cargar la imagen al empezar que es sin moverse, la primera de todas
+        self.rect = self.image.get_rect() #crear rectangulo
+        self.rect.x = x #definir rectangulo en x
+        self.rect.y = y #definir rectangulo en y
+        self.width = self.image.get_width() #coger anchura
+        self.height = self.image.get_height() #coger altura
+        self.vel_y = 0 #velocidad en y
+        self.jumped = False #salto false
+        self.direction = 0 #dirección 0 (parado sin hacer nada)
+        self.in_air = True #salto
+
 
 player = Player(100, screen_height - 130)  # definir posición inicial del jugador en pantalla
 
@@ -228,14 +228,15 @@ coin_group.add(score_coin)  # llamar a la imagen moneda
 # cargar nivel data y cargar el mundo
 if path.exists(f'Levels/level{level}_data'):  # función para llamar al próximo nivel si existe
     pickle_in = open(f'Levels/level{level}_data', 'rb')  # función para abrir el nivel solicitado
-    world_data = pickle.load(pickle_in)
-world = World(world_data, screen)
+    world_data = pickle.load(pickle_in) #cargar en world data el valor del pickle
+world = World(world_data, screen) #mostrar en pantalla world con el valor de data cargado
 
 
 # crear botones
 restart_button = Button(screen_width // 2 - 80, screen_height // 2 + 100, restart_img, screen)  # crear botón reset con su tamaño y posición
 start_button = Button(screen_width // 2 - 250, screen_height // 2, start_img, screen)  # crear botón empezar con su tamaño y posición
 exit_button = Button(screen_width // 2 + 50, screen_height // 2, exit_img, screen)  # crear botón exit con su tamaño y posición
+
 
 
 run = True  # para inicializar
@@ -245,8 +246,8 @@ while run:  # bucle
 
     screen.blit(bg_img, (0, 0))  # definir donde cargar la imagen del fondo de pantalla
 
-    if main_menu == True:  # comprobar si el menú está true
-        if exit_button.draw():  #
+    if main_menu == True:  # comprobar si el menú está true y posteriormente comprobar si alguno de los dos botones han sido clicados y por lo tanto ejecutar la opción de parar el run del juego, o quitar el menú y jugar
+        if exit_button.draw():
             run = False
         if start_button.draw():
             main_menu = False
@@ -254,7 +255,7 @@ while run:  # bucle
         world.draw()
 
         if game_over == 0:  # comprobar si game over = 0, lo que significa que no se ha perdido, juego en marcha
-            blob_group.update()  # actualizar enemigos
+            ghost_group.update()  # actualizar enemigos
             platform_group.update()  # actualizar plataformas
             # actualizar contador y comprobar si una moneda ha sido cogida
             if pygame.sprite.spritecollide(player, coin_group, True):  # detectar collision con una moneda y elimanarla con true
@@ -262,7 +263,7 @@ while run:  # bucle
                 coin_fx.play()  # llamar al sonido de coger moneda
             draw_text('  ' + str(score), font_score, white, tile_size - 10, 10)  # texto para mostrar las monedas en pantalla
 
-        blob_group.draw(screen)  # mostrar enemigos en la pantalla
+        ghost_group.draw(screen)  # mostrar enemigos en la pantalla
         platform_group.draw(screen)  # mostrar plataformas en la pantalla
         lava_group.draw(screen)  # mostrar la lava en la pantalla
         coin_group.draw(screen)  # mostrar monedas en la pantalla
@@ -302,6 +303,31 @@ while run:  # bucle
         if event.type == pygame.QUIT:  # comprobar si se ha pedido salir
             run = False  # parar run
 
-    pygame.display.update()
+    pygame.display.update() #actualizar
 
 pygame.quit()  # salir de pygame
+
+
+
+#world_data = [
+#[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 1],
+#[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 2, 2, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 7, 0, 5, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 1],
+#[1, 7, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 7, 0, 0, 0, 0, 1],
+#[1, 0, 2, 0, 0, 7, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 0, 0, 2, 0, 0, 4, 0, 0, 0, 0, 3, 0, 0, 3, 0, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 7, 0, 0, 0, 0, 2, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 2, 2, 2, 2, 2, 1],
+#[1, 0, 0, 0, 0, 0, 2, 2, 2, 6, 6, 6, 6, 6, 1, 1, 1, 1, 1, 1],
+#[1, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+#[1, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+#[1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+#]
