@@ -76,7 +76,7 @@ class Player():
     def __init__(self, x, y):
         self.reset(x, y)
 
-    def update(self, game_over):
+    def update(self, game_over): #col tresh significa los pixeles maximos que permite la colisión para no haber un error o el personaje se quede incrustado
         dx = 0
         dy = 0
         walk_cooldown = 5
