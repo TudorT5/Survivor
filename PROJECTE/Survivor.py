@@ -197,7 +197,7 @@ class Player():
         self.images_left = [] #lista en blanco
         self.index = 0 #para escoger la variable de la lista
         self.counter = 0 # contador para controlar la velocidad de animación
-        for num in range(1, 5): #para seleccionar en caso de querer mas imagenes con el mismo nombre
+        for num in range(1, 4): #para seleccionar imagen y hacer la animación
             img_right = pygame.image.load(f'Graficos/Flork/Flork_{num}.png') #cargar imagen del personaje derecha
             img_right = pygame.transform.scale(img_right, (32, 64)) #escalar imagen
             img_left = pygame.transform.flip(img_right, True, False) #invertir imagen para así ahorrarnos crear la imagen hacia la derecha
